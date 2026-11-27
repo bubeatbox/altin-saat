@@ -1,0 +1,101 @@
+[
+  {
+    "ad": "T.C. Sağlık Bakanlığı İzmir Şehir Hastanesi",
+    "ilce": "Bayraklı",
+    "lat": 38.4844,
+    "lng": 27.1783,
+    "tur": "inme merkezi",
+    "kaynak": "https://izmirsehir.saglik.gov.tr",
+    "dogrulandi": true
+  },
+  {
+    "ad": "SBÜ İzmir Tepecik Eğitim ve Araştırma Hastanesi",
+    "ilce": "Konak",
+    "lat": 38.4250,
+    "lng": 27.1583,
+    "tur": "inme merkezi",
+    "kaynak": "https://tepecikeah.saglik.gov.tr",
+    "dogrulandi": true
+  },
+  {
+    "ad": "İzmir Kâtip Çelebi Üniversitesi Atatürk Eğitim ve Araştırma Hastanesi",
+    "ilce": "Karabağlar",
+    "lat": 38.3972,
+    "lng": 27.1042,
+    "tur": "inme ünitesi",
+    "kaynak": "https://ikcuiah.saglik.gov.tr",
+    "dogrulandi": true
+  },
+  {
+    "ad": "Dokuz Eylül Üniversitesi Araştırma ve Uygulama Hastanesi",
+    "ilce": "Balçova",
+    "lat": 38.3948,
+    "lng": 27.0334,
+    "tur": "inme ünitesi",
+    "kaynak": "https://hastane.deu.edu.tr",
+    "dogrulandi": true
+  },
+  {
+    "ad": "Ege Üniversitesi Tıp Fakültesi Hastanesi",
+    "ilce": "Bornova",
+    "lat": 38.4542,
+    "lng": 27.2142,
+    "tur": "inme ünitesi",
+    "kaynak": "https://hastane.ege.edu.tr",
+    "dogrulandi": true
+  },
+  {
+    "ad": "İzmir Ekonomi Üniversitesi Medical Point Hastanesi",
+    "ilce": "Karşıyaka",
+    "lat": 38.4622,
+    "lng": 27.0933,
+    "tur": "inme merkezi",
+    "kaynak": "https://www.mph.com.tr/tibbi-birimlerimiz/inme-merkezi",
+    "dogrulandi": true
+  },
+  {
+    "ad": "İzmir Tınaztepe Üniversitesi Özel Galen Hastanesi",
+    "ilce": "Bayraklı",
+    "lat": 38.4631,
+    "lng": 27.1695,
+    "tur": "inme merkezi",
+    "kaynak": "https://www.tinaztepe.com",
+    "dogrulandi": true
+  },
+  {
+    "ad": "SBÜ İzmir Bozyaka Eğitim ve Araştırma Hastanesi",
+    "ilce": "Karabağlar",
+    "lat": 38.3886,
+    "lng": 27.1319,
+    "tur": "nöroloji acil",
+    "kaynak": "https://bozyakaeah.saglik.gov.tr",
+    "dogrulandi": false
+  },
+  {
+    "ad": "İzmir Bakırçay Üniversitesi Çiğli Eğitim ve Araştırma Hastanesi",
+    "ilce": "Çiğli",
+    "lat": 38.4975,
+    "lng": 27.0436,
+    "tur": "nöroloji acil",
+    "kaynak": "https://ciglieah.saglik.gov.tr",
+    "dogrulandi": false
+  },
+  {
+    "ad": "Medicana International İzmir Hastanesi",
+    "ilce": "Konak",
+    "lat": 38.4239,
+    "lng": 27.1511,
+    "tur": "nöroloji acil",
+    "kaynak": "https://www.medicana.com.tr/izmir",
+    "dogrulandi": false
+  },
+  {
+    "ad": "Acıbadem İzmir Kent Hastanesi",
+    "ilce": "Çiğli",
+    "lat": 38.4903,
+    "lng": 27.0706,
+    "tur": "nöroloji acil",
+    "kaynak": "https://www.acibadem.com.tr/hastane/izmir-kent",
+    "dogrulandi": false
+  }
+]

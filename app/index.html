@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0F2236">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Altın Saat">
+<title>Altın Saat</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="ikon-192.png">
+<link rel="apple-touch-icon" href="ikon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Her test ekranında görünen acil şerit: 112 her an bir dokunuş uzakta -->
+<header class="ust-serit" id="ustSerit" hidden>
+  <span class="ust-saat" id="ustSaat"></span>
+  <button class="ses-dugme" id="sesDugme" aria-pressed="false">Sesli yönerge kapalı</button>
+  <a class="ust-112" href="tel:112">112</a>
+</header>
+
+<main id="uygulama">
+
+  <!-- GİRİŞ -->
+  <section class="ekran" data-ekran="giris">
+    <div class="marka">
+      <svg class="marka-iz" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" opacity=".25"/><path d="M24 4a20 20 0 0 1 17.3 10" fill="none" stroke="var(--altin)" stroke-width="5" stroke-linecap="round"/><path d="M24 13v11l7 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      <span class="marka-ad">Altın Saat</span>
+    </div>
+    <h1 class="buyuk-baslik">İnme belirtisi mi var?</h1>
+
+    <div class="kim-secim">
+      <button class="kim-dugme" data-kim="yakin">
+        <span class="kim-ad">Yanımdakini test et</span>
+        <span class="kim-alt">Ben telefonu tutup yönlendiririm</span>
+      </button>
+      <button class="kim-dugme" data-kim="kendim">
+        <span class="kim-ad">Kendimi test et</span>
+        <span class="kim-alt">Tek başımayım, adım adım göster</span>
+      </button>
+    </div>
+
+    <a class="dugme acil" href="tel:112">112'yi ara</a>
+
+    <div class="profil-sec" id="profilSec" hidden>
+      <span class="kucuk-baslik">Kayıtlı kişi seç</span>
+      <div class="secenekler yatay" id="profilListesi"></div>
+    </div>
+
+    <div class="giris-baglantilar">
+      <button class="baglanti" data-git="hazirla">Telefonunu acile hazırla</button>
+      <button class="baglanti" data-git="temel-giris">Sağlıklıyken kayıt oluştur</button>
+    </div>
+
+    <details class="sunum">
+      <summary>Sunum modu</summary>
+      <p>Kamera ve sensör kullanmadan örnek verilerle akışı gösterir.</p>
+      <div class="secenekler yatay">
+        <label class="secim"><input type="radio" name="sunum" value="kapali" checked> Kapalı</label>
+        <label class="secim"><input type="radio" name="sunum" value="normal"> Sağlıklı kişi</label>
+        <label class="secim"><input type="radio" name="sunum" value="inme"> İnme belirtisi</label>
+      </div>
+      <button class="baglanti" data-git="gonullu-giris">Gönüllü ölçümü (eşik ayarı için veri topla)</button>
+    </details>
+  </section>
+
+  <!-- BELİRTİ SORULARI (NINDS listesi) -->
+  <section class="ekran" data-ekran="belirtiler" hidden>
+    <span class="adim">Adım 1/4</span>
+    <h1 class="baslik">Bunlardan biri aniden başladı mı?</h1>
+    <div class="secenekler" id="belirtiListesi">
+      <button class="belirti" data-belirti="guc" aria-pressed="false">Yüzde, kolda ya da bacakta güçsüzlük veya uyuşma</button>
+      <button class="belirti" data-belirti="konusma" aria-pressed="false">Konuşmada ya da anlamada zorluk, kafa karışıklığı</button>
+      <button class="belirti" data-belirti="gorme" aria-pressed="false">Bir ya da iki gözde görme kaybı</button>
+      <button class="belirti" data-belirti="denge" aria-pressed="false">Yürüyememe, baş dönmesi, denge kaybı</button>
+      <button class="belirti" data-belirti="bas" aria-pressed="false">Nedeni belli olmayan çok şiddetli baş ağrısı</button>
+    </div>
+    <div class="alt-eylem">
+      <button class="dugme birincil" id="belirtiDevam">Hiçbiri yok, teste geç</button>
+    </div>
+  </section>
+
+  <!-- ERKEN UYARI: bariz bulgu çıkınca testlerin sonu beklenmez -->
+  <section class="ekran" data-ekran="uyari" hidden>
+    <div class="sonuc-ust">
+      <h1 class="sonuc-baslik">İnme belirtisi olabilir</h1>
+      <p class="sonuc-alt" id="uyariNeden"></p>
+    </div>
+    <a class="dugme acil" href="tel:112">112'yi şimdi ara</a>
+    <p class="aciklama">Ambulansı beklerken kalan testleri yapabilirsin. Sonuçlar 112'ye söyleyeceklerini hazırlar.</p>
+    <div class="alt-eylem">
+      <button class="dugme ikincil" id="uyariDevam">Kalan testlere devam et</button>
+      <button class="dugme ikincil" id="uyariSonuc">112'ye söyleyeceklerimi göster</button>
+    </div>
+  </section>
+
+  <!-- YÜZ -->
+  <section class="ekran" data-ekran="yuz" hidden>
+    <span class="adim">Adım 2/4: Yüz</span>
+    <h1 class="baslik" id="yuzYonerge"></h1>
+    <div class="kamera-kutu" id="kameraKutu">
+      <video id="video" playsinline muted></video>
+      <canvas id="yuzTuval"></canvas>
+      <svg class="sunum-yuz" id="sunumYuz" viewBox="0 0 200 240" hidden aria-hidden="true">
+        <ellipse cx="100" cy="120" rx="72" ry="92" fill="var(--yuz)" />
+        <ellipse cx="72" cy="100" rx="9" ry="6" fill="#0F2236"/>
+        <ellipse cx="128" cy="100" rx="9" ry="6" fill="#0F2236"/>
+        <path id="sunumAgiz" d="M68 168 Q100 172 132 168" fill="none" stroke="#0F2236" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <svg class="cerceve" viewBox="0 0 300 400" preserveAspectRatio="none" aria-hidden="true">
+        <defs><mask id="oyuk"><rect width="300" height="400" fill="#fff"/><ellipse cx="150" cy="190" rx="98" ry="138" fill="#000"/></mask></defs>
+        <rect width="300" height="400" fill="rgba(5,12,21,.55)" mask="url(#oyuk)"/>
+        <ellipse class="cerceve-cizgi" id="cerceveCizgi" cx="150" cy="190" rx="98" ry="138" pathLength="100"/>
+      </svg>
+      <div class="kamera-durum" id="kameraDurum">Kamera hazırlanıyor</div>
+    </div>
+    <div class="alt-eylem">
+      <button class="dugme birincil" id="yuzBasla" hidden>Ölçümü elle başlat</button>
+      <button class="atla" data-atla="yuz">Bu testi atla</button>
+    </div>
+  </section>
+
+  <!-- KONUŞMA -->
+  <section class="ekran" data-ekran="konusma" hidden>
+    <span class="adim">Adım 3/4: Konuşma</span>
+    <h1 class="baslik" id="konusmaYonerge"></h1>
+    <blockquote class="hedef-cumle" id="hedefCumle"></blockquote>
+    <div class="ses-cubuklari" id="sesCubuklari" aria-hidden="true"></div>
+    <p class="duyulan" id="duyulan" aria-live="polite"></p>
+    <div class="alt-eylem">
+      <button class="dugme birincil" id="konusmaBasla">Dinlemeye başla</button>
+      <button class="atla" data-atla="konusma">Bu testi atla</button>
+    </div>
+  </section>
+
+  <!-- KOL -->
+  <section class="ekran" data-ekran="kol" hidden>
+    <span class="adim">Adım 4/4: Kollar</span>
+    <h1 class="baslik" id="kolYonerge"></h1>
+    <p class="aciklama buyuk" id="kolAlt"></p>
+    <div class="su-terazisi" id="suTerazisi" aria-hidden="true">
+      <div class="terazi-hedef"></div>
+      <div class="terazi-kabarcik" id="kabarcik"></div>
+      <svg class="geri-sayim" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" pathLength="100" id="kolHalka"/></svg>
+      <span class="terazi-sayi" id="kolSayi">10</span>
+    </div>
+    <p class="durum-yazi" id="kolDurum" aria-live="polite"></p>
+    <div class="alt-eylem">
+      <button class="dugme birincil" id="kolBasla">Başlat</button>
+      <button class="atla" data-atla="kol">Bu testi atla</button>
+    </div>
+  </section>
+
+  <!-- SON NORMAL GÖRÜLME -->
+  <section class="ekran" data-ekran="saat" hidden>
+    <h1 class="baslik" id="saatBaslik"></h1>
+    <p class="aciklama">112 ilk bunu soracak. Tedavi seçenekleri bu saate göre değişir.</p>
+    <div class="secenekler" id="saatSecenek">
+      <button class="secim-dugme" data-dk="0">Az önce, birkaç dakika</button>
+      <button class="secim-dugme" data-dk="30">Yaklaşık yarım saat önce</button>
+      <button class="secim-dugme" data-dk="60">Yaklaşık 1 saat önce</button>
+      <button class="secim-dugme" data-dk="180">Birkaç saat önce</button>
+      <button class="secim-dugme" data-dk="uyku">Uyanınca böyleydi / bilmiyorum</button>
+    </div>
+    <label class="saat-elle">Saati biliyorsan: <input type="time" id="saatElle"></label>
+  </section>
+
+  <!-- SONUÇ -->
+  <section class="ekran" data-ekran="sonuc" hidden>
+    <div class="sonuc-ust" id="sonucUst">
+      <h1 class="sonuc-baslik" id="sonucBaslik"></h1>
+      <p class="sonuc-alt" id="sonucAlt"></p>
+    </div>
+    <a class="dugme acil" href="tel:112">112'yi şimdi ara</a>
+
+    <div class="kart">
+      <h2 class="kart-baslik">112'ye söyleyeceklerin</h2>
+      <p class="soylenecek" id="soylenecek"></p>
+    </div>
+
+    <div class="kart">
+      <h2 class="kart-baslik">Testte görülenler</h2>
+      <ul class="bulgular" id="bulgular"></ul>
+    </div>
+
+    <div class="kart">
+      <h2 class="kart-baslik">En yakın inme merkezleri</h2>
+      <ul class="merkezler" id="merkezler"><li class="soluk">Konum alınıyor</li></ul>
+      <p class="not">Kendin götürme, ambulansı bekle. Ekip hastaneye önceden haber verir ve doğru merkeze götürür.</p>
+    </div>
+
+    <div class="alt-eylem">
+      <button class="dugme ikincil" id="aileyeGonder">Aileme konum gönder</button>
+      <button class="baglanti" data-git="giris">Baştan başla</button>
+    </div>
+    <p class="yasal">Altın Saat teşhis koymaz. Sonuç ne olursa olsun, ani belirti varsa 112'yi ara.</p>
+  </section>
+
+  <!-- TELEFONU ACİLE HAZIRLA -->
+  <section class="ekran" data-ekran="hazirla" hidden>
+    <button class="geri" data-git="giris" aria-label="Geri">Geri</button>
+    <h1 class="baslik">Telefonunu acile hazırla.</h1>
+    <p class="aciklama">İnmede bir el güçsüzleşir, şifre girmek ve uygulama aramak zorlaşır. Bugün iki dakikanı ayır.</p>
+    <ol class="kurulum">
+      <li class="kart">
+        <h2 class="kart-baslik">Güç tuşuyla 112</h2>
+        <p><b>Android:</b> Güç tuşuna hızlıca 5 kez bas.</p>
+        <p><b>iPhone:</b> Yan tuşa hızlıca 5 kez bas ya da yan tuşla ses tuşunu birlikte basılı tut.</p>
+        <small>Kilit açmadan, tek elle çalışır. Ayarlar → Acil Durum SOS bölümünden açık olduğunu kontrol et.</small>
+      </li>
+      <li class="kart">
+        <h2 class="kart-baslik">Altın Saat'i ana ekrana ekle</h2>
+        <p>Bir dokunuşla açılır, uygulama gibi çalışır.</p>
+        <button class="dugme birincil" id="kurDugme" hidden>Ana ekrana ekle</button>
+        <small id="kurIos" hidden>iPhone: Safari'de alttaki Paylaş düğmesine dokun, sonra "Ana Ekrana Ekle"yi seç.</small>
+        <small id="kurAndroid" hidden>Android: Chrome menüsünden (sağ üstteki üç nokta) "Ana ekrana ekle"yi seç.</small>
+        <small id="kurTamam" hidden>Altın Saat zaten ana ekranında.</small>
+      </li>
+      <li class="kart">
+        <h2 class="kart-baslik">Acil durum kişisi ve tıbbi bilgi</h2>
+        <p>SOS ile 112 arandığında telefon konumunu bu kişiye mesajla gönderir. Kullandığın ilaçları, özellikle kan sulandırıcıları kilit ekranında görünür yap.</p>
+        <small>iPhone: Sağlık → Tıbbi Kimlik. Android: Ayarlar → Güvenlik ve acil durum.</small>
+      </li>
+    </ol>
+    <div class="alt-eylem"><button class="dugme ikincil" data-git="giris">Ana ekrana dön</button></div>
+  </section>
+
+  <!-- GÖNÜLLÜ ÖLÇÜMÜ: eşikleri gerçek insanlarla ayarlamak için -->
+  <section class="ekran" data-ekran="gonullu-giris" hidden>
+    <button class="geri" data-git="giris" aria-label="Geri">Geri</button>
+    <h1 class="baslik">Gönüllü ölçümü</h1>
+    <p class="aciklama">Görüntü ve ses kaydedilmez, yalnızca ölçülen sayılar bu telefonda saklanır. İsim yerine kod kullan.</p>
+    <label class="alan">Gönüllü kodu
+      <input type="text" id="gonulluKod" placeholder="Örnek: G01" maxlength="12" autocomplete="off">
+    </label>
+    <div class="secenekler">
+      <label class="secim"><input type="radio" name="gonulluEtiket" value="normal" checked> Normal hâlimle</label>
+      <label class="secim"><input type="radio" name="gonulluEtiket" value="taklit"> İnme taklidi: sağ ağız köşesini ve sağ kolu bilerek düşür, cümleyi yavaş ve bozuk söyle</label>
+    </div>
+    <p class="durum-yazi" id="gonulluSayi"></p>
+    <div class="alt-eylem">
+      <button class="dugme birincil" id="gonulluBasla">Ölçüme başla</button>
+      <button class="dugme ikincil" id="gonulluIndir">Toplanan veriyi gönder</button>
+      <button class="baglanti" id="gonulluSil">Bu telefondaki ölçümleri sil</button>
+    </div>
+  </section>
+
+  <section class="ekran" data-ekran="gonullu-bitti" hidden>
+    <h1 class="baslik">Ölçüm kaydedildi.</h1>
+    <ul class="bulgular" id="gonulluOzet"></ul>
+    <div class="alt-eylem">
+      <button class="dugme birincil" data-git="gonullu-giris">Yeni ölçüm</button>
+      <button class="dugme ikincil" id="gonulluIndir2">Toplanan veriyi gönder</button>
+    </div>
+  </section>
+
+  <!-- TEMEL KAYIT -->
+  <section class="ekran" data-ekran="temel-giris" hidden>
+    <button class="geri" data-git="giris" aria-label="Geri">Geri</button>
+    <h1 class="baslik">Sağlıklı hâli kaydedelim.</h1>
+    <p class="aciklama">Herkesin yüzü biraz asimetrik, konuşma hızı farklıdır. Bugünkü hâli kaydedilirse test ileride genel ortalamayla değil, kişinin kendisiyle kıyaslar. Kayıt yalnızca bu telefonda kalır.</p>
+    <div class="secenekler yatay">
+      <label class="secim"><input type="radio" name="temelKim" value="kendim" checked> Kendim için</label>
+      <label class="secim"><input type="radio" name="temelKim" value="yakin"> Bir yakınım için</label>
+    </div>
+    <label class="alan">Kaydın adı
+      <input type="text" id="profilAdi" placeholder="Örnek: Annem" maxlength="24" autocomplete="off">
+    </label>
+    <div class="alt-eylem">
+      <button class="dugme birincil" id="temelBasla">Kayda başla</button>
+    </div>
+  </section>
+
+  <section class="ekran" data-ekran="temel-bitti" hidden>
+    <h1 class="baslik" id="temelBittiBaslik">Kayıt hazır.</h1>
+    <p class="aciklama">Bir gün test gerekirse giriş ekranında bu kişiyi seç. Ölçümler bugünkü hâliyle kıyaslanacak.</p>
+    <div class="alt-eylem"><button class="dugme birincil" data-git="giris">Tamam</button></div>
+  </section>
+
+</main>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

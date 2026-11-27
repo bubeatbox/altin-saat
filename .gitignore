@@ -1,0 +1,9 @@
+# Depoya yalnız uygulama, testler ve README girer
+/*
+!/app/
+!/test/
+!/README.md
+!/Baslat.cmd
+!/.gitignore
+test/gonullu/
+__pycache__/
